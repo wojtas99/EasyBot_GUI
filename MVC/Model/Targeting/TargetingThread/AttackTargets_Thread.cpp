@@ -3,8 +3,6 @@
 #include <algorithm>
 
 
-
-
 void AttackTargets_Thread::run()
 {
     if (m_targets.empty()) return;
