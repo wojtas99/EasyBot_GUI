@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Bot_View</class>
+ <widget class="QMainWindow" name="Bot_View">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>378</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::FocusPolicy::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>EasyBot</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>400</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::StrongFocus</enum>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="walker_pushButton">
+        <property name="text">
+         <string>Walker</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="healing_pushButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Healing</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="looting_pushButton">
+        <property name="text">
+         <string>Looting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="alarms_pushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Alarms</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ai_pushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>AI</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="targeting_pushButton">
+        <property name="text">
+         <string>Targeting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="spells_pushButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Spells</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="scripts_pushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Scripts</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="healFriend_pushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Heal Friend</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="runeMaker_pushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Rune Maker</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Save &amp;&amp; Load</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QListWidget" name="profiles_listWidget">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QComboBox" name="saveLoad_comboBox">
+               <item>
+                <property name="text">
+                 <string>All</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Walker</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Targeting</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Looting</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Healing</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Spells</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Scripts</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Alarms</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Heal Friend</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>AI</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Rune Maker</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="name_lineEdit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="placeholderText">
+                <string>Save Name ex. Medusa</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="save_pushButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="load_pushButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Load</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Bot Core</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="3" column="1">
+          <widget class="QCheckBox" name="spells_checkBox">
+           <property name="text">
+            <string>Spells</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QCheckBox" name="healFriend_checkBox">
+           <property name="text">
+            <string>Heal Friend</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="alarms_checkBox">
+           <property name="text">
+            <string>Alarms</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QCheckBox" name="targeting_checkBox">
+           <property name="text">
+            <string>Targeting</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QCheckBox" name="scripts_checkBox">
+           <property name="text">
+            <string>Scripts</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="looting_checkBox">
+           <property name="text">
+            <string>Looting</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QCheckBox" name="walker_checkBox">
+           <property name="text">
+            <string>Walker</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QCheckBox" name="ai_checkBox">
+           <property name="text">
+            <string>AI</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QCheckBox" name="healing_checkBox">
+           <property name="text">
+            <string>Healing</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="3">
+          <widget class="QCheckBox" name="all_checkBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>All Options</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="3">
+          <widget class="QCheckBox" name="runeMaker_checkBox">
+           <property name="text">
+            <string>Rune Maker</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuLicense">
+    <property name="title">
+     <string>License</string>
+    </property>
+    <addaction name="actionAbout_QT"/>
+   </widget>
+   <addaction name="menuLicense"/>
+  </widget>
+  <action name="actionAbout_QT">
+   <property name="text">
+    <string>About QT</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>walker_pushButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>targeting_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>579</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>walker_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>484</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>looting_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>scripts_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>579</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>spells_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>healing_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>579</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>alarms_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>healFriend_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>536</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ai_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>329</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>runeMaker_checkBox</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>535</x>
+     <y>329</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
