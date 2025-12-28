@@ -757,6 +757,11 @@ struct Spell
     int minMp;
 };
 
+struct Script {
+    std::string text;
+    bool enabled;
+};
+
 struct MessageStruct {
     std::string name;
     uint16_t level;

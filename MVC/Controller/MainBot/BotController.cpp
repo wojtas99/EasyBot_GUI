@@ -52,6 +52,13 @@ BotController::BotController(BotView *botView, QObject *parent)
     }
     });
 
+    // Scripts
+    connect(m_botView, &BotView::startScripts_signal, this, [this](bool checked){
+        if (m_scriptsController) {
+            m_scriptsController->startScripts_slot(checked);
+        }
+    });
+
     // Save & Load
     connect(m_botView, &BotView::saveRequested, this, &BotController::onSaveRequested);
     connect(m_botView, &BotView::loadRequested, this, &BotController::onLoadRequested);

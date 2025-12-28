@@ -1,5 +1,6 @@
 #include "ScriptsView.h"
 
+#include <iostream>
 #include <QCheckBox>
 #include <QTextEdit>
 #include <QEvent>
@@ -32,6 +33,22 @@ ScriptsView::ScriptsView(QWidget *parent) :
 
         auto *checkBox = new QCheckBox();
 
+
+        connect(checkBox, &QCheckBox::toggled, this, [this, row](bool checked) {
+            if (checked) {
+                QWidget *cellWidget = ui->scripts_tableWidget->cellWidget(row, 0);
+                QTextEdit *textEdit = qobject_cast<QTextEdit *>(cellWidget);
+                textEdit->setEnabled(false);
+                emit addItem_signal(row, checked, textEdit->toPlainText());
+
+            } else {
+                QWidget *cellWidget = ui->scripts_tableWidget->cellWidget(row, 0);
+                QTextEdit *textEdit = qobject_cast<QTextEdit *>(cellWidget);
+                textEdit->setEnabled(true);
+                emit addItem_signal(row, checked, textEdit->toPlainText());
+            }
+        });
+
         QWidget *checkBoxWidget = new QWidget(ui->scripts_tableWidget);
         QHBoxLayout *layout = new QHBoxLayout(checkBoxWidget);
         layout->addWidget(checkBox);
@@ -52,7 +69,7 @@ bool ScriptsView::eventFilter(QObject *obj, QEvent *event) {
             textEdit = qobject_cast<QTextEdit*>(obj->parent());
         }
 
-        if (textEdit) {
+        if (textEdit && textEdit->isEnabled()) {
             ScriptEditorDialog dialog(textEdit->toPlainText(), this);
             if (dialog.exec() == QDialog::Accepted) {
                 textEdit->setPlainText(dialog.getScript());
@@ -62,3 +79,4 @@ bool ScriptsView::eventFilter(QObject *obj, QEvent *event) {
     }
     return QMainWindow::eventFilter(obj, event);
 }
+

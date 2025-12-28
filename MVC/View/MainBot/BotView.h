@@ -35,6 +35,7 @@ public:
     void startLooting_signal(bool state);
     void startHealing_signal(bool state);
     void startSpells_signal(bool state);
+    void startScripts_signal(bool state);
 
 
     void saveRequested(const QString &name, const QString &category);

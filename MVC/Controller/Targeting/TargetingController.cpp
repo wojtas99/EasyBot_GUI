@@ -28,8 +28,7 @@ TargetingController::TargetingController(QObject* parent)
     m_view->show();
 }
 
-TargetingController::~TargetingController()
-{
+TargetingController::~TargetingController() {
 }
 
 void TargetingController::showView()

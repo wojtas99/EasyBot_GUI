@@ -1,7 +1,3 @@
-//
-// Created by blazz on 12.10.2025.
-//
-
 #ifndef TARGETINGCONTROLLER_H
 #define TARGETINGCONTROLLER_H
 #include "Targeting/TargetingModel.h"

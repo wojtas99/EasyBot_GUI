@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include "Scripts/ScriptsModel.h"
 #include "Scripts/ScriptsView.h"
+#include "../../Model/Scripts/ScriptsThread/RunScripts_Thread.h"
 
 
 class ScriptsController : public QObject {
@@ -17,7 +18,12 @@ public:
     QJsonArray saveSettings() const;
     void loadSettings(const QJsonArray &json);
 
+private slots:
+    // ScriptsView Requests
+    void addItem_View(const int &id, bool state, const QString &script_text);
 
+public slots:
+    void startScripts_slot(bool state);
 
 private:
     ScriptsView *m_view;

@@ -9,7 +9,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 
     const QStringList keywords = {
         "if", "else", "for", "while", "return",
-        "break", "continue", "function", "var", "proto"
+        "break", "continue", "function", "var", "proto", "Sleep"
     };
 
     for (const QString &word : keywords) {
@@ -20,7 +20,6 @@ Highlighter::Highlighter(QTextDocument *parent)
     }
     QTextCharFormat stringFormat;
     stringFormat.setForeground(QColor("#CE9178"));
-
     rules.append({
         QRegularExpression("\".*?\""),
         stringFormat
