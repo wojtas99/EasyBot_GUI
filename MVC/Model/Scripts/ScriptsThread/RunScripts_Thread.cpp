@@ -18,5 +18,5 @@ void RunScripts_Thread::run() {
     while (!isInterruptionRequested()) {
         msleep(10);
     }
-    std::cout << "Koniec" << std::endl;
+    std::cout << "End" << std::endl;
 }
