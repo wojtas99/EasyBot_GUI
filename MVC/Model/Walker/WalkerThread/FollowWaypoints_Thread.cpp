@@ -15,7 +15,9 @@ void FollowWaypoints_Thread::run() {
         auto playerPos = proto->getPosition(localPlayer);
         if (playerPos.x == wpt.position.x && playerPos.y == wpt.position.y && playerPos.z == wpt.position.z) {
             if (wpt.option == "Action") {
-                engine->executeLuaScript(wpt.action);
+                /*
+                engine->executeLuaScript(wpt.action);*/
+
             }
             index = (index + 1) % waypoints.size();
             emit indexUpdate_signal(static_cast<int>(index));

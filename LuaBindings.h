@@ -1,7 +1,5 @@
 #ifndef LUABINDINGS_H
 #define LUABINDINGS_H
-
-#include <QThread>
 #include <lua.hpp>
 #include <luabridge3/LuaBridge/LuaBridge.h>
 #include "../../const.h"

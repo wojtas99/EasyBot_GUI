@@ -56,6 +56,7 @@ file(GLOB_RECURSE MVC
         "${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/*.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/MVC/Model/*.cpp"
         BotEngine.cpp
+        LuaEngine.cpp
 )
 
 add_executable(EasyBotGUI
