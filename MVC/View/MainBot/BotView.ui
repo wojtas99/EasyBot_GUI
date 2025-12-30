@@ -81,16 +81,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="ai_pushButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>AI</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
     <item>
@@ -123,22 +113,12 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="healFriend_pushButton">
+       <widget class="QPushButton" name="ai_pushButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Heal Friend</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="runeMaker_pushButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Rune Maker</string>
+         <string>AI</string>
         </property>
        </widget>
       </item>
@@ -301,13 +281,6 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="3">
-          <widget class="QCheckBox" name="healFriend_checkBox">
-           <property name="text">
-            <string>Heal Friend</string>
-           </property>
-          </widget>
-         </item>
          <item row="4" column="1">
           <widget class="QCheckBox" name="alarms_checkBox">
            <property name="text">
@@ -343,13 +316,6 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
-          <widget class="QCheckBox" name="ai_checkBox">
-           <property name="text">
-            <string>AI</string>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="3">
           <widget class="QCheckBox" name="healing_checkBox">
            <property name="text">
@@ -370,10 +336,10 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="3">
-          <widget class="QCheckBox" name="runeMaker_checkBox">
+         <item row="4" column="3">
+          <widget class="QCheckBox" name="ai_checkBox">
            <property name="text">
-            <string>Rune Maker</string>
+            <string>AI</string>
            </property>
           </widget>
          </item>
@@ -527,22 +493,6 @@
   <connection>
    <sender>all_checkBox</sender>
    <signal>clicked()</signal>
-   <receiver>healFriend_checkBox</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>457</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>536</x>
-     <y>288</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>all_checkBox</sender>
-   <signal>clicked()</signal>
    <receiver>ai_checkBox</receiver>
    <slot>click()</slot>
    <hints>
@@ -552,22 +502,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>448</x>
-     <y>329</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>all_checkBox</sender>
-   <signal>clicked()</signal>
-   <receiver>runeMaker_checkBox</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>457</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>535</x>
      <y>329</y>
     </hint>
    </hints>
