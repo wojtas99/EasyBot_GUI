@@ -21,11 +21,7 @@ void AgentThread::run() {
                 for (const auto& message : messages) {
                     if (name != message.name) {
                         std::string response = performRequest_GPT(message);
-                        if (message.mode  == MessageSay) {
-                            proto->talk(response);
-                        } else {
-                            proto->talkPrivate(Otc::MessageMode::MessageSay, message.name, response);
-                        }
+                        proto->talk(response);
                         msleep(1000);
                         break;
                     }
@@ -36,18 +32,14 @@ void AgentThread::run() {
                 for (const auto& message : messages) {
                     if (name == message.name) {
                         std::string response = performRequest_GPT(message);
-                        if (message.mode  == MessageSay) {
-                            proto->talk(response);
-                        } else {
-                            proto->talkPrivate(Otc::MessageMode::MessageSay, message.name, response);
-                        }
+                        proto->talk(response);
                         msleep(1000);
                         break;
                     }
                 }
             }
         }
-        msleep(5000);
+        msleep(3000);
     }
 }
 
