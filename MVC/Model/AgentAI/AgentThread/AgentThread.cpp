@@ -33,7 +33,7 @@ void AgentThread::run() {
                 for (const auto& message : messages) {
                     if (name == message.name) {
                         std::string response = performRequest_GPT(message);
-                        if (message.mode == Otc::MessageSay || message.mode == Otc::MessageWhisper || Otc::MessageYell) proto->talk(response);
+                        if (message.mode == Otc::MessageSay) proto->talk(response);
                         if (message.mode == Otc::MessagePrivateFrom) proto->talkPrivate(Otc::MessagePrivateTo, message.name, response);
                         msleep(1000);
                         break;

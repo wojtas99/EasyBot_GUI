@@ -16,6 +16,7 @@ void FollowWaypoints_Thread::run() {
     }
     
     size_t index = findClosest();
+    std::cout << index << std::endl;
 
     QElapsedTimer stuckTimer;
     stuckTimer.start();
@@ -33,6 +34,7 @@ void FollowWaypoints_Thread::run() {
             stuckTimer.restart();
             emit indexUpdate_signal(static_cast<int>(index));
         }
+        if (engine->hasTarget) stuckTimer.restart();
         if (engine->hasTarget && (index + 1) % waypoints.size() != 0) {
             index += bestWpt(waypoints[index], waypoints[index + 1]);
         }
@@ -57,9 +59,6 @@ void FollowWaypoints_Thread::run() {
         }
         msleep(50);
     }
-
-
-
 
     // Stop the Lua script if running
     if (luaScriptEngine) {
@@ -165,7 +164,7 @@ int FollowWaypoints_Thread::findClosest() {
     auto playerPos = proto->getPosition(localPlayer);
     for (int i = 0; i < waypoints.size(); ++i) {
         const auto& wpt = waypoints[i];
-        if (playerPos.z != wpt.position.z) {
+        if (playerPos.z != wpt.position.z || wpt.direction != "C") {
             continue;
         }
         int dist = std::max(
