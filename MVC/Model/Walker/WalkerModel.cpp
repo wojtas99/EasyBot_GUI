@@ -27,10 +27,6 @@ WalkerModel::~WalkerModel() {
 void WalkerModel::addItem(const QString &direction, const QString &option, const QString &action) {
     auto localPlayer = proto->getLocalPlayer();
     auto position = proto->getPosition(localPlayer);
-    std::cout << std::hex << localPlayer << std::endl;
-    std::cout << position.x << std::endl;
-    std::cout << position.y << std::endl;
-
     QString item = "";
     if (option == "Label") {
         item = QStringLiteral("%1 %2 %3 %4 %5").arg(action, direction).arg(position.x).arg(position.y).arg(position.z);

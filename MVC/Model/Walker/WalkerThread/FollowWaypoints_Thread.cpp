@@ -6,7 +6,8 @@
 
 void FollowWaypoints_Thread::run() {
     if (waypoints.empty()) return;
-    
+
+
     // Start the Lua script if one is set
     if (!luaScriptText.empty()) {
         luaScriptEngine = new LuaEngine(luaScriptText, nullptr);
@@ -15,49 +16,51 @@ void FollowWaypoints_Thread::run() {
     }
     
     size_t index = findClosest();
+
+    QElapsedTimer stuckTimer;
+    stuckTimer.start();
+    size_t lastIndex = index;
+
+
     while (!isInterruptionRequested()) {
+
+        if (index != lastIndex) {
+            lastIndex = index;
+            stuckTimer.restart();
+        } else if (stuckTimer.hasExpired(25000)) {
+            index = findClosest();
+            lastIndex = index;
+            stuckTimer.restart();
+            emit indexUpdate_signal(static_cast<int>(index));
+        }
         if (engine->hasTarget && (index + 1) % waypoints.size() != 0) {
             index += bestWpt(waypoints[index], waypoints[index + 1]);
         }
         auto localPlayer = proto->getLocalPlayer();
-        auto wpt = waypoints[index];
         auto playerPos = proto->getPosition(localPlayer);
-        if (playerPos.x == wpt.position.x && playerPos.y == wpt.position.y && playerPos.z == wpt.position.z) {
-            index = (index + 1) % waypoints.size();
-            if (wpt.option == "Action") {
-                auto* actionEngine = new LuaEngine(wpt.action, nullptr);
-                actionEngine->start();
-                while (actionEngine->isRunning()) {
-                    if (isInterruptionRequested()) {
-                        actionEngine->requestStop();
-                        actionEngine->wait(1000);
-                        delete actionEngine;
-                        return;
-                    }
-                    msleep(100);
-                }
-                std::string returnedLabel = actionEngine->getReturnedString();
-                delete actionEngine;
-                if (!returnedLabel.empty()) {
-                    for (size_t i = 0; i < waypoints.size(); ++i) {
-                        if (waypoints[i].action == returnedLabel) {
-                            index = i;
-                        }
-                    }
-                }
-            }
-            emit indexUpdate_signal(static_cast<int>(index));
-            continue;
-        }
+        auto wpt = waypoints[index];
         // Only walks if we dont have a target or we want to Lure
         if (!engine->hasTarget || wpt.option == "Lure") {
             if (!proto->isAutoWalking(localPlayer)) {
-                performWalk(wpt, localPlayer);
+                if (wpt.option == "Stand" || wpt.option == "Lure") performWalk(wpt, localPlayer);
+                if (wpt.option == "Use") performUse(wpt);
+                if (wpt.option == "Action") {
+                    index = performAction(wpt, index);
+                    if (index == -1) return;
+                    wpt = waypoints[index];
+                }
             }
+        }
+        if (playerPos.x == wpt.position.x && playerPos.y == wpt.position.y && playerPos.z == wpt.position.z) {
+            index = (index + 1) % waypoints.size();
+            emit indexUpdate_signal(static_cast<int>(index));
         }
         msleep(50);
     }
-    
+
+
+
+
     // Stop the Lua script if running
     if (luaScriptEngine) {
         std::cout << "Stopping walker Lua script..." << std::endl;
@@ -81,9 +84,65 @@ void FollowWaypoints_Thread::performWalk(Waypoint wpt, uintptr_t localPlayer) {
         proto->walk(direction);
         return;
     }
-    auto playerPos = proto->getPosition(localPlayer);
-    if ((playerPos.x != wpt.position.x || playerPos.y != wpt.position.y) && playerPos.z == wpt.position.z) {
-        proto->autoWalk(localPlayer, wpt.position, false);
+    proto->autoWalk(localPlayer, wpt.position, false);
+}
+
+size_t FollowWaypoints_Thread::performAction(Waypoint wpt, size_t index) {
+    auto* actionEngine = new LuaEngine(wpt.action, nullptr);
+    actionEngine->start();
+    while (actionEngine->isRunning()) {
+        if (isInterruptionRequested()) {
+            actionEngine->requestStop();
+            actionEngine->wait(1000);
+            delete actionEngine;
+            return -1;
+        }
+        msleep(100);
+    }
+    std::string returnedLabel = actionEngine->getReturnedString();
+    delete actionEngine;
+    if (!returnedLabel.empty()) {
+        for (size_t i = 0; i < waypoints.size(); ++i) {
+            if (waypoints[i].action == returnedLabel) {
+                index = i;
+                return index;
+            }
+        }
+    }
+    return index;
+}
+
+void FollowWaypoints_Thread::performUse(Waypoint wpt) {
+    int itemId = std::stoi(wpt.action);
+    auto wptPos = wpt.position;
+    auto direction = getDirection(wpt.direction);
+    if (direction == Otc::North) wptPos.y -=1;
+    if (direction == Otc::East) wptPos.x +=1;
+    if (direction == Otc::South) wptPos.y +=1;
+    if (direction == Otc::West) wptPos.x -=1;
+    if (direction == Otc::NorthEast) wptPos.x +=1, wptPos.y -=1;
+    if (direction == Otc::SouthEast) wptPos.x -=1, wptPos.y +=1;
+    if (direction == Otc::SouthWest) wptPos.x -=1, wptPos.y +=1;
+    if (direction == Otc::NorthWest) wptPos.x -=1, wptPos.y -=1;
+    if (itemId == 0) {
+        auto tile = proto->getTile(wptPos);
+        auto topThing = proto->getTopUseThing(tile);
+        proto->use(topThing);
+        msleep(1000);
+    } else {
+        auto containers = proto->getContainers();
+        for (auto container : containers) {
+            auto items = proto->getItems(container);
+            for (auto item : items) {
+                if (proto->getItemId(item) == itemId) {
+                    auto tile = proto->getTile(wptPos);
+                    auto topThing = proto->getTopUseThing(tile);
+                    proto->useWith(item, topThing);
+                    msleep(1000);
+                    return;
+                }
+            }
+        }
     }
 }
 
@@ -118,7 +177,6 @@ int FollowWaypoints_Thread::findClosest() {
             closestIndex = i;
         }
     }
-
     return closestIndex;
 }
 
@@ -143,11 +201,4 @@ int FollowWaypoints_Thread::bestWpt(Waypoint first_wpt, Waypoint second_wpt) {
     return (distFirst < distSecond) ? 0 : 1;
 }
 
-void FollowWaypoints_Thread::setLuaScript(const std::string& script) {
-    luaScriptText = script;
-}
-
-void FollowWaypoints_Thread::clearLuaScript() {
-    luaScriptText.clear();
-}
 

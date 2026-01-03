@@ -1,12 +1,7 @@
-//
-// Created by blazz on 06.11.2025.
-//
-
 #ifndef FOLLOWWAYPINTS_THREAD_H
 #define FOLLOWWAYPINTS_THREAD_H
 #include <QThread>
 #include <string>
-#include <atomic>
 #include "../../const.h"
 #include "../../proto_functions_client.h"
 
@@ -31,7 +26,9 @@ private:
     LuaEngine* luaScriptEngine;
     
     int findClosest();
-    void performWalk(Waypoint wpt, uintptr_t localPlayer);
+    void performWalk(Waypoint wpt, uintptr_t localPlayer7y);
+    size_t performAction(Waypoint wpt, size_t index);
+    void performUse(Waypoint wpt);
     Otc::Direction getDirection(const std::string& wpt_direction);
     int bestWpt(Waypoint first_wpt, Waypoint second_wpt);
 };

@@ -39,7 +39,7 @@ WalkerView::WalkerView(QWidget *parent)
     });
     connect(option_buttonGroup, &QButtonGroup::buttonClicked, this, [this, option_buttonGroup]() {
         auto option = option_buttonGroup->checkedButton()->text().trimmed().toStdString();
-        bool enable = (option == "Action" || option == "Label");
+        bool enable = (option == "Action" || option == "Label" || option == "Use");
         ui->action_textEdit->setEnabled(enable);
     });
 
