@@ -32,7 +32,10 @@ void AttackTargets_Thread::run()
                 } else {
                     looted = true;
                     playerPos = proto->getPosition(localPlayer);
-                    monsterPos = proto->getPosition(currentTarget);
+                    auto trueMonsterPos = proto->getPosition(currentTarget);
+                    if (trueMonsterPos.x != 0xFFFF) {
+                        monsterPos = trueMonsterPos;
+                    }
                     desiredStance(playerPos, monsterPos, target.desiredStance);
                     monstersAttacks(playerPos, monsterPos, target.monstersAttacks);
                 }
@@ -46,7 +49,7 @@ void AttackTargets_Thread::run()
                     monsters.emplace_back(spectator);
                 }
             }
-            if (monsterPos.x != 0 && monsterPos.x != 0xFFFF && m_openCorpseState && looted) {
+            if (m_openCorpseState && looted) {
                 looted = false;
                 auto tile = proto->getTile(monsterPos);
                 auto getTopThing = proto->getTopUseThing(tile);

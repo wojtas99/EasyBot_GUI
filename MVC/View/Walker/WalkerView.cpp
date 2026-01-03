@@ -28,6 +28,7 @@ WalkerView::WalkerView(QWidget *parent)
     option_buttonGroup->addButton(ui->lure_radioButton);
     option_buttonGroup->addButton(ui->label_radioButton);
     option_buttonGroup->addButton(ui->action_radioButton);
+    option_buttonGroup->addButton(ui->use_radioButton);
 
     connect(ui->add_pushButton, &QPushButton::clicked, this, [this, direction_buttonGroup, option_buttonGroup]() {
         auto direction = direction_buttonGroup->checkedButton()->text();
