@@ -35,9 +35,6 @@ void FollowWaypoints_Thread::run() {
             emit indexUpdate_signal(static_cast<int>(index));
         }
         if (engine->hasTarget) stuckTimer.restart();
-        if (engine->hasTarget && (index + 1) % waypoints.size() != 0) {
-            index += bestWpt(waypoints[index], waypoints[index + 1]);
-        }
         auto localPlayer = proto->getLocalPlayer();
         auto playerPos = proto->getPosition(localPlayer);
         auto wpt = waypoints[index];
@@ -45,9 +42,9 @@ void FollowWaypoints_Thread::run() {
         if (!engine->hasTarget || wpt.option == "Lure") {
             if (!proto->isAutoWalking(localPlayer)) {
                 if (wpt.option == "Stand" || wpt.option == "Lure") performWalk(wpt, localPlayer);
-                if (wpt.option == "Use") performUse(wpt);
+                if (wpt.option == "Use") performUse(wpt, localPlayer);
                 if (wpt.option == "Action") {
-                    index = performAction(wpt, index);
+                    index = performAction(wpt, index, localPlayer);
                     if (index == -1) return;
                     wpt = waypoints[index];
                 }
@@ -86,7 +83,12 @@ void FollowWaypoints_Thread::performWalk(Waypoint wpt, uintptr_t localPlayer) {
     proto->autoWalk(localPlayer, wpt.position, false);
 }
 
-size_t FollowWaypoints_Thread::performAction(Waypoint wpt, size_t index) {
+size_t FollowWaypoints_Thread::performAction(Waypoint wpt, size_t index, uintptr_t localPlayer) {
+    auto playerPos = proto->getPosition(localPlayer);
+    if ((playerPos.x != wpt.position.x || playerPos.y != wpt.position.y) && playerPos.z == wpt.position.z) {
+        proto->autoWalk(localPlayer, wpt.position, true);
+        return index;
+    }
     auto* actionEngine = new LuaEngine(wpt.action, nullptr);
     actionEngine->start();
     while (actionEngine->isRunning()) {
@@ -111,7 +113,12 @@ size_t FollowWaypoints_Thread::performAction(Waypoint wpt, size_t index) {
     return index;
 }
 
-void FollowWaypoints_Thread::performUse(Waypoint wpt) {
+void FollowWaypoints_Thread::performUse(Waypoint wpt, uintptr_t localPlayer) {
+    auto playerPos = proto->getPosition(localPlayer);
+    if ((playerPos.x != wpt.position.x || playerPos.y != wpt.position.y) && playerPos.z == wpt.position.z) {
+        proto->autoWalk(localPlayer, wpt.position, true);
+        return;
+    }
     int itemId = std::stoi(wpt.action);
     auto wptPos = wpt.position;
     auto direction = getDirection(wpt.direction);

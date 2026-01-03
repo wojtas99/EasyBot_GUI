@@ -59,7 +59,7 @@ file(GLOB_RECURSE MVC
         LuaEngine.cpp
 )
 
-add_executable(EasyBotGUI WIN32
+add_executable(EasyBotGUI
         EasyBot_GUI.cpp
         ${MVC}
         ${QRC_SOURCES}

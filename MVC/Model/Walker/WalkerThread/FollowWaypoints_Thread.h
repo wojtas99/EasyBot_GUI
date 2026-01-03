@@ -13,9 +13,6 @@ class FollowWaypoints_Thread : public QThread {
     explicit FollowWaypoints_Thread(const std::vector<Waypoint> &waypoints, QObject *parent = nullptr)
         : QThread(parent), waypoints(waypoints), luaScriptEngine(nullptr) {}
     
-    void setLuaScript(const std::string& script);
-    void clearLuaScript();
-    
 protected:
     void run() override;
     signals:
@@ -26,9 +23,9 @@ private:
     LuaEngine* luaScriptEngine;
     
     int findClosest();
-    void performWalk(Waypoint wpt, uintptr_t localPlayer7y);
-    size_t performAction(Waypoint wpt, size_t index);
-    void performUse(Waypoint wpt);
+    void performWalk(Waypoint wpt, uintptr_t localPlayer);
+    size_t performAction(Waypoint wpt, size_t index, uintptr_t localPlayer);
+    void performUse(Waypoint wpt, uintptr_t localPlayer);
     Otc::Direction getDirection(const std::string& wpt_direction);
     int bestWpt(Waypoint first_wpt, Waypoint second_wpt);
 };
